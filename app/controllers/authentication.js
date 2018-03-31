@@ -67,6 +67,8 @@ exports.register = function(req, res, next) {
     })
 }
 
+// Role Authorization
+// (roles) is an array of roles that must fully match current users flagged roles
 exports.roleAuthorization = function(roles) {
     return function(req, res, next){
         var user = req.user;

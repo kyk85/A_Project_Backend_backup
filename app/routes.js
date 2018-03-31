@@ -1,0 +1,39 @@
+var AuthController = require ('./controllers/authentication');
+var BookController = require ('./controllers/book');
+var express = require ('express');
+var passportService = require ('../config/passport');
+var passport = require ('passport');
+
+var requireAuth = passport.authenticate('jwt', {session: false})
+var requireLogin = passport.authenticate('local', {session: false})
+
+module.exports = function(app){
+    var baseRoute = express.Router();
+    var apiRoutes = express.Router();
+    var authRoutes = express.Router();
+    var bookRoutes = express.Router();
+
+baseRoute.get('/', function(req, res){
+    res.json({message:'it works!'});
+});
+
+// Authentication Routes
+apiRoutes.use('/auth', authRoutes);
+
+authRoutes.post('/register', AuthController.register);
+authRoutes.post('/login', requireLogin, AuthController.login);
+
+authRoutes.get('/protected', requireAuth, function(req, res){
+    res.send({content: 'Success'});
+});
+
+// Book Routes
+apiRoutes.use('/book', bookRoutes);
+
+bookRoutes.get('/', requireAuth, AuthController.roleAuthorization(['user','admin']), BookController.getBooks);
+bookRoutes.post('/', requireAuth, AuthController.roleAuthorization(['user','admin']), BookController.createBook);
+bookRoutes.delete('/:book_id', requireAuth, AuthController.roleAuthorization(['user','admin']), BookController.deleteBook);
+
+app.use('/api', apiRoutes)
+
+}

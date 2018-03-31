@@ -11,6 +11,7 @@ var router = require('./app/routes');
 mongoose.connect(databaseConfig.url);
 
 app.listen(process.env.PORT || 8080);
+
 console.log("App listening on port 8080");
 
 app.use(bodyParser.urlencoded({extended: false})); // Parses urlencoded bodies (url bar)
@@ -20,3 +21,18 @@ app.use(cors());
 
 router(app);
 
+// var express = require('express');
+// var app = express();
+// var bodyParser = require('body-parser');
+// var nodemailer = require('nodemailer');
+ 
+// app.use(bodyParser.urlencoded({extended:true}));
+// app.use(bodyParser.json());
+
+// var port = process.env.PORT || 8080;
+
+// var router = express.Router();
+
+// app.use('/api', router)
+// app.listen(port);
+// console.log('Magic happens on port' + port)

@@ -23,10 +23,9 @@ exports.createBook = function(req, res, next){
             if(err){
                 res.send(err);
             }
-
             res.json(books)
-        })
-    })
+        });
+    });
 }
 
 exports.deleteBook = function(req, res, next){
@@ -34,5 +33,5 @@ exports.deleteBook = function(req, res, next){
         _id: req.params.book._id
     }, function(err, todo){
         res.json(book)
-    })
+    });
 }

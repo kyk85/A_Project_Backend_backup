@@ -1,5 +1,3 @@
-import { truncate } from 'fs';
-
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
 
@@ -15,9 +13,21 @@ var UserSchema = new mongoose.Schema({
         required: true
     },
     role: {
-        type:String,
-        enum: ['user', 'admin', 'superadmin'],
+        type: String,
+        enum: ['user', 'admin'],
         default: 'user'
+    },
+    displayName: {
+        type: String,
+    },
+    library: [{
+        owned: Number,
+        read: Number,
+        wishlist: Number
+    }],
+    isDisabled: {
+        type: Boolean,
+        default: false
     }
 }, {
     timestamps: true
@@ -33,10 +43,17 @@ UserSchema.pre('save', function(next){
 
     bcrypt.genSalt(SALT_FACTOR, function(err, salt){
         if(err){
-            return cb(err);
-        } else {
-            cb(null, isMatch);
-        }
+            return next(err);
+        } 
+
+        bcrypt.hash(user.password, salt, null, function(err, hash){
+            if(err){
+                return next(err);
+            }
+
+            user.password = hash;
+            next()
+        })
     });
 });
 
