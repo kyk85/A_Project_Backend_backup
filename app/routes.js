@@ -1,5 +1,6 @@
 var AuthController = require ('./controllers/authentication');
 var BookController = require ('./controllers/book');
+var EmailController = require ('./controllers/email')
 var express = require ('express');
 var passportService = require ('../config/passport');
 var passport = require ('passport');
@@ -12,6 +13,7 @@ module.exports = function(app){
     var apiRoutes = express.Router();
     var authRoutes = express.Router();
     var bookRoutes = express.Router();
+    var inquiryRoutes = express.Router();
 
 baseRoute.get('/', function(req, res){
     res.json({message:'it works!'});
@@ -35,5 +37,10 @@ bookRoutes.post('/', requireAuth, AuthController.roleAuthorization(['user','admi
 bookRoutes.delete('/:book_id', requireAuth, AuthController.roleAuthorization(['user','admin']), BookController.deleteBook);
 
 app.use('/api', apiRoutes)
+
+// Inquiry Routes
+apiRoutes.use('/inquiry', inquiryRoutes)
+
+inquiryRoutes.post('/', EmailController.inquiryReply)
 
 }
