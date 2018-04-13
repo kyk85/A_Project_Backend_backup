@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var logger = require('morgan') // outputs some useful debugging information for us
 var bodyParser = require('body-parser');
 var cors = require('cors');
+//var nodemailer = require('nodemailer');
 
 var databaseConfig = require('./config/database');
 var router = require('./app/routes');
