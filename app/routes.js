@@ -10,8 +10,8 @@ var requireAuth = passport.authenticate('jwt', {session: false})
 var requireLogin = passport.authenticate('local', {session: false})
 
 module.exports = function(app){
-    var baseRoute = express.Router();
     var apiRoutes = express.Router();
+    var baseRoute = express.Router();
     var authRoutes = express.Router();
     var bookRoutes = express.Router();
     var inquiryRoutes = express.Router();
