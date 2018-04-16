@@ -3,12 +3,12 @@ var nodemailer = require('nodemailer');
 exports.inquiryReply = function(req, res) {
     // let response = res
     var transporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com', // to change
-        port: '587', // to change
+        host: process.env.EHOST,
+        port: process.env.EPORT,
         secure: false,
         auth: {
-            user: 'USER',
-            pass: 'PASS'
+            user: process.env.EUSER,
+            pass: process.env.EPASS
         }
     });
     
@@ -25,8 +25,9 @@ exports.inquiryReply = function(req, res) {
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
             return res.json(error);
-        }
+        } else {
         // console.log(response)
         res.json({message: "sending email to " + name + " at " + email})
+        }
     });
 }

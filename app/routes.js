@@ -48,7 +48,8 @@ apiRoutes.use('/inquiry', inquiryRoutes)
 
 inquiryRoutes.post('/', EmailController.inquiryReply)
 
-app.use('/api', apiRoutes)
+// Prefix
+app.use('/api', apiRoutes) 
 
 }
 
