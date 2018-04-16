@@ -17,6 +17,7 @@ module.exports = function(app){
     var inquiryRoutes = express.Router();
 
 // Base routes
+// /api/main
 apiRoutes.use('/main', baseRoute)
 
 baseRoute.get('/', function(req, res){
@@ -24,6 +25,7 @@ baseRoute.get('/', function(req, res){
 });
 
 // Authentication Routes
+// /api/auth/...
 apiRoutes.use('/auth', authRoutes);
 
 authRoutes.post('/register', AuthController.register);
@@ -34,6 +36,7 @@ authRoutes.get('/protected', requireAuth, function(req, res){
 });
 
 // Book Routes
+// /api/book/...
 apiRoutes.use('/book', bookRoutes);
 
 bookRoutes.get('/', requireAuth, AuthController.roleAuthorization(['user','admin']), BookController.getBooks);

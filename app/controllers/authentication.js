@@ -58,7 +58,7 @@ exports.register = function(req, res, next) {
                 return next(err);
             }
 
-            var userInfo = setUserInfo(user);
+            var userInfo = setUserInfo(user); // logs in user after registration
 
             res.status(201).json({
                 token: 'JWT ' + generateToken(userInfo),

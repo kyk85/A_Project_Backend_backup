@@ -19,7 +19,7 @@ exports.createBook = function(req, res, next){
             res.send(err)
         }
 
-        Book.find(function(err, books){
+        Book.find(function(err, books){ // Lists books including newly created
             if(err){
                 res.send(err);
             }
